@@ -1,0 +1,9 @@
+
+.custom-select {
+  --color: white; // Cor do texto selecionado
+  color: white;   // Fallback para navegadores que não usam a variável
+}
+
+.custom-select .select-text {
+  color: white;   // Força o texto interno a ser branco
+}

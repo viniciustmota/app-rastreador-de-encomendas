@@ -1,0 +1,59 @@
+<ion-header [translucent]="true">
+  <ion-toolbar color="primary">
+    <br>
+    <ion-title>
+      RASTREADOR DE ENCOMENDAS
+    </ion-title>
+    <br>
+    <h5 class="ion-padding-horizontal">Selecione uma loja:</h5>
+      <ion-select class="ion-padding-horizontal custom-select" [(ngModel)]="selectedStore" label-placement="floating" fill="solid">
+        <ion-select-option value="aliexpress">Aliexpress</ion-select-option>
+        <ion-select-option value="shopee">Shopee</ion-select-option>
+      </ion-select>
+    <br>
+    <ion-searchbar animated="true" placeholder="Código de rastreio" [(ngModel)]="codigo" (keydown.enter)="localizarObjeto(codigo)"></ion-searchbar>
+    <br>
+
+  </ion-toolbar>
+</ion-header>
+
+<ion-content [fullscreen]="true">
+  <ng-container *ngIf="statusRequisicao">
+    <h2 class="ion-text-center">Informações</h2>
+    <ion-item>
+      <ion-label>
+        <h3>Status: {{status}}</h3>
+        <br>
+        <h3><b>Código de Rastreamento:</b> {{codigoRastreamento}}</h3>
+        <br>
+        <h3>De: {{paisOrigem}} &nbsp;&nbsp;&nbsp;&nbsp; Para: {{paisDestino}}</h3>
+        <br>
+        <h3>Trasportadora: {{nomeTransportadora}}</h3>
+        <br>
+        <h3>Data da Entrega: {{dataEntrega}}</h3>
+        <br>
+        <h3>Total de dias: {{prazoTotal}}</h3>
+
+      </ion-label>
+    </ion-item>
+    <br>
+    <h2 class="ion-text-center">Histórico</h2>
+
+<!-- Lista de eventos, só aparece se tiver itens -->
+<ion-list *ngIf="detailList && detailList.length > 0">
+  <ion-item *ngFor="let evento of detailList">
+    <ion-label>
+      <h2 class="ion-text-wrap">{{ evento.standerdDesc || evento.message }}</h2>
+      <p>{{ evento.status || 'Status indisponível' }} - {{ evento.timeStr || formatarData(evento.timestamp) }}</p>
+    </ion-label>
+  </ion-item>
+</ion-list>
+
+<!-- Mensagem de lista vazia -->
+<ion-item *ngIf="!detailList || detailList.length === 0" class="ion-text-center">
+  <ion-label class="ion-text-center">Histórico não encontrado</ion-label>
+</ion-item>
+
+
+  </ng-container>
+</ion-content>
